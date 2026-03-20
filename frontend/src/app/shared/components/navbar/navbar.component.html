@@ -1,0 +1,21 @@
+<header class="h-14 bg-white border-b border-gray-200 flex items-center px-6 gap-4 flex-shrink-0">
+  <!-- Mobile sidebar toggle -->
+  <button
+    (click)="toggleSidebar.emit()"
+    class="lg:hidden p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+    aria-label="Abrir menu"
+  >
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+
+  <!-- Sidebar toggle (desktop) -->
+  <button
+    (click)="toggleSidebar.emit()"
+    class="hidden lg:flex p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+    aria-label="Recolher menu"
+  >
+    <span class="material-symbols-outlined text-xl">dock_to_right</span>
+  </button>
+
+  <h2 class="text-sm font-semibold text-gray-700">{{ pageTitle() }}</h2>
+</header>
