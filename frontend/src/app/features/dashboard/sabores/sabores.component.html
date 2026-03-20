@@ -1,0 +1,185 @@
+<!-- Header -->
+<div class="flex items-start justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-gray-900">Cardápio de Sabores</h1>
+    <p class="text-sm text-gray-500 mt-0.5">Gerencie as opções de pizza do seu estabelecimento.</p>
+  </div>
+  <button (click)="openCreate()" class="btn-primary flex items-center gap-2">
+    <span class="material-symbols-outlined text-lg">add</span>
+    Novo Sabor
+  </button>
+</div>
+
+@if (isLoading()) {
+  <div class="flex items-center justify-center h-64">
+    <svg class="animate-spin h-8 w-8 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+    </svg>
+  </div>
+} @else if (activePizzas().length === 0) {
+  <div class="card flex flex-col items-center justify-center h-52 text-gray-400">
+    <span class="material-symbols-outlined text-5xl mb-3">local_pizza</span>
+    <p class="text-base font-medium">Nenhum sabor cadastrado</p>
+    <p class="text-sm mt-1">Clique em "Novo Sabor" para começar.</p>
+  </div>
+} @else {
+  <!-- Pizza Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    @for (pizza of activePizzas(); track pizza.id) {
+      <div class="card overflow-hidden flex flex-col group hover:shadow-md transition-shadow duration-200">
+        <!-- Pizza Image / Hero -->
+        <div class="relative h-40 bg-gradient-to-br {{ getCategoryConfig(pizza.category).gradientClass }} flex items-center justify-center overflow-hidden">
+          <div class="absolute inset-0 opacity-20">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <pattern id="circles" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+                <circle cx="15" cy="15" r="10" fill="white" opacity="0.15"/>
+              </pattern>
+              <rect width="100%" height="100%" fill="url(#circles)"/>
+            </svg>
+          </div>
+          <span class="text-6xl drop-shadow-lg z-10">{{ getCategoryConfig(pizza.category).emoji }}</span>
+          <div class="absolute top-3 right-3 z-10">
+            <span class="text-xs font-semibold px-2 py-1 rounded-full bg-white/90 text-gray-700">
+              {{ getCategoryConfig(pizza.category).label }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-4 flex flex-col flex-1">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <h3 class="font-bold text-gray-900 text-base leading-tight">{{ pizza.flavorName }}</h3>
+            <span class="text-primary-600 font-bold text-sm whitespace-nowrap">{{ formatCurrency(pizza.price) }}</span>
+          </div>
+          <p class="text-xs text-gray-500 leading-relaxed flex-1">{{ pizza.description }}</p>
+
+          <!-- Actions -->
+          <div class="flex gap-2 mt-4 pt-3 border-t border-gray-100">
+            <button
+              (click)="openEdit(pizza)"
+              class="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium text-gray-600 hover:text-primary-600 border border-gray-200 hover:border-primary-300 rounded-lg py-2 transition-colors"
+            >
+              <span class="material-symbols-outlined text-base">edit</span>
+              Editar
+            </button>
+            <button
+              (click)="confirmDelete(pizza.id)"
+              class="flex items-center justify-center p-2 text-red-500 hover:text-red-600 border border-gray-200 hover:border-red-300 rounded-lg transition-colors"
+              title="Excluir"
+            >
+              <span class="material-symbols-outlined text-base">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+}
+
+<!-- Create Modal -->
+@if (showCreateModal()) {
+  <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between p-6 border-b border-gray-100 sticky top-0 bg-white rounded-t-2xl">
+        <h3 class="text-lg font-bold text-gray-900">Novo Sabor</h3>
+        <button (click)="showCreateModal.set(false)" class="text-gray-400 hover:text-gray-600">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form [formGroup]="createForm" (ngSubmit)="submitCreate()" class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Sabor *</label>
+          <input type="text" formControlName="flavorName" class="input-field" placeholder="Ex: Calabresa" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Preço (R$) *</label>
+            <input type="number" step="0.01" formControlName="price" class="input-field" placeholder="0,00" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Categoria *</label>
+            <select formControlName="category" class="input-field">
+              @for (cat of categories; track cat) {
+                <option [value]="cat">{{ cat }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Ingredientes / Descrição *</label>
+          <textarea formControlName="description" class="input-field resize-none" rows="3" placeholder="Descreva os ingredientes..."></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" (click)="showCreateModal.set(false)" class="btn-outline">Cancelar</button>
+          <button type="submit" [disabled]="createForm.invalid || isSaving()" class="btn-primary flex items-center gap-2">
+            @if (isSaving()) { <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> }
+            Adicionar Sabor
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- Edit Modal -->
+@if (showEditModal()) {
+  <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between p-6 border-b border-gray-100 sticky top-0 bg-white rounded-t-2xl">
+        <h3 class="text-lg font-bold text-gray-900">Editar Sabor</h3>
+        <button (click)="showEditModal.set(false)" class="text-gray-400 hover:text-gray-600">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="p-6 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Nome do Sabor *</label>
+          <input type="text" formControlName="flavorName" class="input-field" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Preço (R$) *</label>
+            <input type="number" step="0.01" formControlName="price" class="input-field" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Categoria *</label>
+            <select formControlName="category" class="input-field">
+              @for (cat of categories; track cat) {
+                <option [value]="cat">{{ cat }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Ingredientes / Descrição *</label>
+          <textarea formControlName="description" class="input-field resize-none" rows="3"></textarea>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" (click)="showEditModal.set(false)" class="btn-outline">Cancelar</button>
+          <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn-primary flex items-center gap-2">
+            @if (isSaving()) { <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> }
+            Atualizar Sabor
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+<!-- Delete Confirm Modal -->
+@if (deleteConfirmId()) {
+  <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
+      <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-red-500 text-2xl">delete_forever</span>
+      </div>
+      <h3 class="text-lg font-bold text-gray-900 mb-2">Remover Sabor?</h3>
+      <p class="text-sm text-gray-500 mb-6">Este sabor será removido do cardápio.</p>
+      <div class="flex gap-3 justify-center">
+        <button (click)="deleteConfirmId.set(null)" class="btn-outline px-6">Cancelar</button>
+        <button (click)="executeDelete()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">Remover</button>
+      </div>
+    </div>
+  </div>
+}
