@@ -1,0 +1,30 @@
+<div class="flex h-screen bg-gray-50 overflow-hidden">
+  <!-- Sidebar overlay (mobile) -->
+  @if (sidebarOpen()) {
+    <div
+      class="fixed inset-0 bg-black/30 z-20 lg:hidden"
+      (click)="toggleSidebar()"
+    ></div>
+  }
+
+  <!-- Sidebar -->
+  <div
+    class="fixed lg:static z-30 h-full transition-transform duration-300"
+    [class.-translate-x-full]="!sidebarOpen()"
+    [class.translate-x-0]="sidebarOpen()"
+  >
+    <app-sidebar (closeSidebar)="sidebarOpen.set(false)" />
+  </div>
+
+  <!-- Main area -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <app-navbar
+      [pageTitle]="pageTitle()!"
+      (toggleSidebar)="toggleSidebar()"
+    />
+
+    <main class="flex-1 overflow-y-auto p-6">
+      <router-outlet />
+    </main>
+  </div>
+</div>
