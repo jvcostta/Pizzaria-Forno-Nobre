@@ -31,9 +31,10 @@ export interface Order {
   items: OrderItem[];
   status: OrderStatus;
   totalValue: number;
-  discountApplied: boolean;
+  discountApplied: number;
   finalValue: number;
-  createdAt: string;
+  isDiscountApplied: boolean;
+  orderDate: string;
 }
 
 export interface CreateOrderItemDto {
@@ -46,4 +47,10 @@ export interface CreateOrderItemDto {
 export interface CreateOrderDto {
   customerId: number;
   items: CreateOrderItemDto[];
+  isDiscountApplied?: boolean;
+}
+
+export interface DiscountCheck {
+  eligible: boolean;
+  completedOrders: number;
 }
