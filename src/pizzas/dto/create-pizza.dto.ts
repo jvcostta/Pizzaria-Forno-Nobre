@@ -28,6 +28,10 @@ export class CreatePizzaDto {
   price: number;
 
   @IsOptional()
+  @IsString()
+  category?: string;
+
+  @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }

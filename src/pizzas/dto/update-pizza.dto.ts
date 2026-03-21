@@ -28,6 +28,10 @@ export class UpdatePizzaDto {
   price?: number;
 
   @IsOptional()
+  @IsString()
+  category?: string;
+
+  @IsOptional()
   @IsBoolean()
   isActive?: boolean;
 }

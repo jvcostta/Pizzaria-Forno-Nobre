@@ -19,6 +19,9 @@ export class Pizza {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
+  @Column({ type: 'varchar', length: 20, default: 'Salgada' })
+  category: string;
+
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive: boolean;
 
