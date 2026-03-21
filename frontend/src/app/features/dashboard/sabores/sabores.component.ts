@@ -6,9 +6,7 @@ import { Pizza, PizzaCategory } from '../../../core/models/pizza.model';
 
 interface CategoryConfig {
   label: string;
-  badgeClass: string;
-  gradientClass: string;
-  emoji: string;
+  markerClass: string;
 }
 
 @Component({
@@ -36,21 +34,15 @@ export class SaboresComponent implements OnInit {
   categoryConfig: Record<string, CategoryConfig> = {
     Salgada: {
       label: 'Salgada',
-      badgeClass: 'bg-orange-100 text-orange-700',
-      gradientClass: 'from-orange-400 to-red-500',
-      emoji: '🍕',
+      markerClass: 'cat-salgada',
     },
     Doce: {
       label: 'Doce',
-      badgeClass: 'bg-purple-100 text-purple-700',
-      gradientClass: 'from-pink-400 to-purple-500',
-      emoji: '🍫',
+      markerClass: 'cat-doce',
     },
     Especial: {
       label: 'Especial',
-      badgeClass: 'bg-blue-100 text-blue-700',
-      gradientClass: 'from-blue-400 to-indigo-600',
-      emoji: '⭐',
+      markerClass: 'cat-especial',
     },
   };
 
@@ -89,8 +81,9 @@ export class SaboresComponent implements OnInit {
     return this.categoryConfig[category ?? 'Salgada'] ?? this.categoryConfig['Salgada'];
   }
 
-  formatCurrency(value: number): string {
-    return `R$ ${value.toFixed(2).replace('.', ',')}`;
+  formatCurrency(value: number | string): string {
+    const num = typeof value === 'string' ? parseFloat(value) : value;
+    return `R$ ${num.toFixed(2).replace('.', ',')}`;
   }
 
   openCreate() {
@@ -120,7 +113,7 @@ export class SaboresComponent implements OnInit {
       .create({
         flavorName: flavorName!,
         price: this.parsePrice(price),
-        category: category as PizzaCategory,
+        category: category ?? 'Salgada',
         description: description!,
         isActive: isActive ?? true,
       })
@@ -148,7 +141,7 @@ export class SaboresComponent implements OnInit {
       .update(pizza.id, {
         flavorName: flavorName!,
         price: this.parsePrice(price),
-        category: category as PizzaCategory,
+        category: category ?? 'Salgada',
         description: description!,
         isActive: isActive ?? true,
       })
