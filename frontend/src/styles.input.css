@@ -5,18 +5,18 @@
 @source "./app/**/*.ts";
 
 @theme {
-  --color-primary-50: #fff1f2;
-  --color-primary-100: #ffe4e6;
-  --color-primary-200: #fecdd3;
-  --color-primary-300: #fda4af;
-  --color-primary-400: #fb7185;
-  --color-primary-500: #f43f5e;
-  --color-primary-600: #e11d48;
-  --color-primary-700: #be123c;
-  --color-primary-800: #9f1239;
-  --color-primary-900: #881337;
+  --color-primary-50: #f2ede0;
+  --color-primary-100: #ece6d7;
+  --color-primary-200: #dfd8c2;
+  --color-primary-300: #ccc19f;
+  --color-primary-400: #b1a57a;
+  --color-primary-500: #82824b;
+  --color-primary-600: #343b29;
+  --color-primary-700: #2d3423;
+  --color-primary-800: #262d1d;
+  --color-primary-900: #1f2418;
 
-  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-sans: 'Segoe UI', system-ui, sans-serif;
 }
 
 @layer base {
@@ -25,8 +25,8 @@
   }
 
   body {
-    background-color: #f9fafb;
-    color: #111827;
+    background-color: #f5f5f5;
+    color: #4a4a4a;
     font-family: var(--font-family-sans);
   }
 
@@ -39,18 +39,246 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-primary-600 hover:bg-primary-700 text-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    box-shadow: 0 8px 20px rgba(52, 59, 41, 0.2);
   }
 
   .btn-outline {
-    @apply border border-primary-600 text-primary-600 hover:bg-primary-50 font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply border text-primary-600 hover:bg-primary-50 font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    border-color: rgba(130, 130, 75, 0.45);
+  }
+
+  .btn-secondary {
+    @apply text-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+    background-color: #82824b;
+  }
+
+  .btn-secondary:hover {
+    background-color: #707040;
   }
 
   .input-field {
-    @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+    @apply w-full rounded-lg px-3 py-2 text-sm transition-colors duration-200;
+    border: 1px solid rgba(130, 130, 75, 0.34);
+    background: rgba(245, 245, 245, 0.82);
+    color: #4a4a4a;
+  }
+
+  .input-field:focus {
+    border-color: rgba(130, 130, 75, 0.9);
+    box-shadow: 0 0 0 3px rgba(130, 130, 75, 0.15);
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100;
+    @apply rounded-xl border;
+    background: #f2ede0;
+    border-color: rgba(130, 130, 75, 0.25);
+    box-shadow: 0 5px 18px rgba(74, 74, 74, 0.08);
   }
+}
+
+.artisan-theme {
+  --fn-moss: #343b29;
+  --fn-cream: #f2ede0;
+  --fn-olive: #82824b;
+  --fn-ice: #f5f5f5;
+  --fn-ink: #4a4a4a;
+  --fn-bordo: #9b4a3a;
+  --fn-doce: #7a5b4f;
+  --fn-special: #bf9b30;
+  background: var(--fn-ice);
+  color: var(--fn-ink);
+}
+
+.artisan-main {
+  background: var(--fn-ice);
+}
+
+.artisan-navbar {
+  background: var(--fn-ice) !important;
+  border-bottom: 1px solid rgba(130, 130, 75, 0.28) !important;
+}
+
+.artisan-sidebar {
+  background: var(--fn-moss);
+  color: var(--fn-ice);
+  box-shadow: 4px 0 14px rgba(28, 31, 22, 0.18);
+}
+
+.artisan-sidebar-logo {
+  border-bottom: 1px solid rgba(242, 237, 224, 0.17);
+}
+
+.artisan-logo-mark {
+  background: rgba(245, 245, 245, 0.18);
+}
+
+.artisan-sidebar-logo p {
+  color: rgba(245, 245, 245, 0.72);
+}
+
+.artisan-nav-link {
+  color: rgba(245, 245, 245, 0.88);
+}
+
+.artisan-nav-link:hover {
+  background: rgba(245, 245, 245, 0.12);
+}
+
+.artisan-nav-link.is-active {
+  background: var(--fn-cream);
+  color: var(--fn-moss);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--fn-olive);
+}
+
+.artisan-sidebar-footer {
+  border-top: 1px solid rgba(242, 237, 224, 0.17);
+}
+
+.artisan-logout-link {
+  color: rgba(245, 245, 245, 0.85);
+}
+
+.artisan-logout-link:hover {
+  background: rgba(245, 245, 245, 0.12);
+}
+
+.artisan-theme table th {
+  color: rgba(74, 74, 74, 0.8) !important;
+}
+
+.artisan-theme table tbody td {
+  color: var(--fn-ink) !important;
+}
+
+.artisan-theme table tbody tr:hover {
+  background: rgba(130, 130, 75, 0.08) !important;
+}
+
+.modal-surface {
+  background: var(--fn-cream) !important;
+  border: 1px solid rgba(130, 130, 75, 0.24);
+}
+
+.table-action-btn {
+  color: var(--fn-ink);
+}
+
+.table-action-edit:hover {
+  color: var(--fn-olive);
+  background: rgba(130, 130, 75, 0.12);
+}
+
+.table-action-delete:hover {
+  color: var(--fn-bordo);
+  background: rgba(155, 74, 58, 0.1);
+}
+
+.flavor-card {
+  background: var(--fn-cream) !important;
+  border: 1px solid rgba(130, 130, 75, 0.22);
+}
+
+.flavor-category-marker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.65rem;
+  padding-left: 0.55rem;
+  border-left: 2px solid var(--fn-olive);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fn-ink);
+  letter-spacing: 0.02em;
+}
+
+.flavor-category-marker.cat-salgada {
+  border-left-color: var(--fn-bordo);
+}
+
+.flavor-category-marker.cat-doce {
+  border-left-color: var(--fn-doce);
+}
+
+.flavor-category-marker.cat-especial {
+  border-left-color: var(--fn-special);
+}
+
+.flavor-price {
+  color: var(--fn-moss);
+  font-weight: 700;
+}
+
+.flavor-edit-btn {
+  color: var(--fn-ink);
+  border-color: rgba(130, 130, 75, 0.35);
+}
+
+.flavor-edit-btn:hover {
+  color: var(--fn-olive);
+  background: rgba(130, 130, 75, 0.12);
+}
+
+.flavor-delete-btn {
+  color: var(--fn-bordo);
+  border-color: rgba(130, 130, 75, 0.35);
+}
+
+.flavor-delete-btn:hover {
+  background: rgba(155, 74, 58, 0.08);
+}
+
+.remove-item-btn {
+  color: var(--fn-bordo);
+}
+
+.remove-item-btn:hover {
+  color: #8a3f31;
+}
+
+.discount-banner {
+  background: rgba(130, 130, 75, 0.12);
+  border: 1px solid rgba(130, 130, 75, 0.34);
+  color: var(--fn-ink);
+}
+
+.discount-badge {
+  background: rgba(130, 130, 75, 0.18);
+  color: var(--fn-moss);
+}
+
+.status-pill {
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.status-pending {
+  border-color: rgba(130, 130, 75, 0.35);
+  background: rgba(130, 130, 75, 0.12);
+  color: var(--fn-ink);
+}
+
+.status-preparing {
+  border-color: rgba(74, 74, 74, 0.35);
+  background: rgba(74, 74, 74, 0.1);
+  color: var(--fn-ink);
+}
+
+.status-delivered {
+  border-color: rgba(52, 59, 41, 0.5);
+  background: rgba(52, 59, 41, 0.2);
+  color: var(--fn-moss);
+}
+
+.status-canceled {
+  border-color: rgba(155, 74, 58, 0.44);
+  background: rgba(155, 74, 58, 0.12);
+  color: #8a3f31;
+}
+
+.order-status-select {
+  border-width: 1px;
+  border-radius: 0.55rem;
 }
