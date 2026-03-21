@@ -1,4 +1,4 @@
-<div class="flex h-screen bg-gray-50 overflow-hidden">
+<div class="artisan-theme flex h-screen bg-gray-50 overflow-hidden">
   <!-- Sidebar overlay (mobile) -->
   @if (sidebarOpen()) {
     <div
@@ -7,11 +7,10 @@
     ></div>
   }
 
-  <!-- Sidebar -->
+  <!-- Sidebar — always visible on desktop, toggleable on mobile -->
   <div
-    class="fixed lg:static z-30 h-full transition-transform duration-300"
+    class="fixed lg:static z-30 h-full transition-transform duration-300 lg:translate-x-0"
     [class.-translate-x-full]="!sidebarOpen()"
-    [class.translate-x-0]="sidebarOpen()"
   >
     <app-sidebar (closeSidebar)="sidebarOpen.set(false)" />
   </div>
@@ -23,7 +22,7 @@
       (toggleSidebar)="toggleSidebar()"
     />
 
-    <main class="flex-1 overflow-y-auto p-6">
+    <main class="artisan-main flex-1 overflow-y-auto p-6">
       <router-outlet />
     </main>
   </div>

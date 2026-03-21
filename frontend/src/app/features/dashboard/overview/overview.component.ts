@@ -26,13 +26,16 @@ export class OverviewComponent implements OnInit {
   totalCustomers = computed(() => this.customers().length);
   totalOrders = computed(() => this.orders().length);
   totalRevenue = computed(() =>
-    this.orders().reduce((sum, o) => sum + (o.finalValue ?? 0), 0)
+    this.orders().reduce(
+      (sum, o) => sum + this.toNumber(o.finalValue ?? 0),
+      0,
+    ),
   );
   recentOrders = computed(() => this.orders().slice(0, 5));
 
   barMaxValue = computed(() => {
-    const max = Math.max(...this.topSellers().map((t) => t.totalSold), 1);
-    return max;
+    const values = this.topSellers().map((t) => this.toNumber(t.totalSold));
+    return Math.max(...values, 1);
   });
 
   ngOnInit() {
@@ -51,8 +54,13 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  formatCurrency(value: number): string {
-    return `R$ ${value.toFixed(2).replace('.', ',')}`;
+  toNumber(value: number | string): number {
+    return typeof value === 'string' ? parseFloat(value) || 0 : value;
+  }
+
+  formatCurrency(value: number | string): string {
+    const num = this.toNumber(value);
+    return `R$ ${num.toFixed(2).replace('.', ',')}`;
   }
 
   formatDate(dateStr: string): string {
@@ -78,16 +86,17 @@ export class OverviewComponent implements OnInit {
 
   getStatusClass(status: string): string {
     const classes: Record<string, string> = {
-      PENDING: 'bg-yellow-100 text-yellow-800',
-      PREPARING: 'bg-orange-100 text-orange-800',
-      DELIVERED: 'bg-green-100 text-green-800',
-      CANCELED: 'bg-red-100 text-red-800',
+      PENDING: 'status-pill status-pending',
+      PREPARING: 'status-pill status-preparing',
+      DELIVERED: 'status-pill status-delivered',
+      CANCELED: 'status-pill status-canceled',
     };
-    return classes[status] ?? 'bg-gray-100 text-gray-800';
+    return classes[status] ?? 'status-pill status-pending';
   }
 
-  getBarHeight(value: number): number {
+  getBarHeight(value: number | string): number {
+    const num = this.toNumber(value);
     const max = this.barMaxValue();
-    return max > 0 ? Math.round((value / max) * 160) : 0;
+    return max > 0 ? Math.round((num / max) * 160) : 0;
   }
 }

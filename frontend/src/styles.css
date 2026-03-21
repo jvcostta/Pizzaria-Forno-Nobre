@@ -1302,8 +1302,8 @@
     box-sizing: border-box;
   }
   body {
-    background-color: #f9fafb;
-    color: #111827;
+    background-color: #f5f5f5;
+    color: #4a4a4a;
     font-family: var(--font-family-sans);
   }
   input, select, textarea {
@@ -1313,12 +1313,13 @@
 @layer components {
   .btn-primary {
     border-radius: var(--radius-lg);
-    background-color: var(--color-primary-600);
+    background-color: #343b29;
     padding-inline: calc(var(--spacing) * 4);
     padding-block: calc(var(--spacing) * 2);
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-white);
+    color: #f5f5f5;
+    box-shadow: 0 8px 20px rgba(52, 59, 41, 0.2);
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
@@ -1326,7 +1327,7 @@
     transition-duration: 200ms;
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-primary-700);
+        background-color: #2d3423;
       }
     }
     &:disabled {
@@ -1340,12 +1341,12 @@
     border-radius: var(--radius-lg);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: var(--color-primary-600);
+    border-color: rgba(130, 130, 75, 0.45);
     padding-inline: calc(var(--spacing) * 4);
     padding-block: calc(var(--spacing) * 2);
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-600);
+    color: #343b29;
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
@@ -1353,45 +1354,226 @@
     transition-duration: 200ms;
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-primary-50);
+        background-color: rgba(130, 130, 75, 0.12);
       }
     }
+  }
+  .btn-secondary {
+    border-radius: var(--radius-lg);
+    background-color: #82824b;
+    padding-inline: calc(var(--spacing) * 4);
+    padding-block: calc(var(--spacing) * 2);
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+    color: #f5f5f5;
+    transition: background-color 200ms;
+  }
+  .btn-secondary:hover {
+    background-color: #707040;
   }
   .input-field {
     width: 100%;
     border-radius: var(--radius-lg);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: var(--color-gray-300);
+    border-color: rgba(130, 130, 75, 0.34);
+    background: rgba(245, 245, 245, 0.82);
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
+    color: #4a4a4a;
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
     --tw-duration: 200ms;
     transition-duration: 200ms;
     &:focus {
-      border-color: var(--color-primary-500);
+      border-color: rgba(130, 130, 75, 0.9);
     }
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
     &:focus {
-      --tw-ring-color: var(--color-primary-500);
+      --tw-ring-color: rgba(130, 130, 75, 0.5);
     }
   }
   .card {
     border-radius: var(--radius-xl);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: var(--color-gray-100);
-    background-color: var(--color-white);
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    border-color: rgba(130, 130, 75, 0.25);
+    background-color: #f2ede0;
+    --tw-shadow: 0 5px 18px rgba(74, 74, 74, 0.08);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+}
+.artisan-theme {
+  --fn-moss: #343b29;
+  --fn-cream: #f2ede0;
+  --fn-olive: #82824b;
+  --fn-ice: #f5f5f5;
+  --fn-ink: #4a4a4a;
+  --fn-bordo: #9b4a3a;
+  --fn-doce: #7a5b4f;
+  --fn-special: #bf9b30;
+  background: var(--fn-ice);
+  color: var(--fn-ink);
+}
+.artisan-main {
+  background: var(--fn-ice);
+}
+.artisan-navbar {
+  background: var(--fn-ice) !important;
+  border-bottom: 1px solid rgba(130, 130, 75, 0.28) !important;
+}
+.artisan-sidebar {
+  background: var(--fn-moss);
+  color: var(--fn-ice);
+  box-shadow: 4px 0 14px rgba(28, 31, 22, 0.18);
+}
+.artisan-sidebar-logo {
+  border-bottom: 1px solid rgba(242, 237, 224, 0.17);
+}
+.artisan-logo-mark {
+  background: rgba(245, 245, 245, 0.18);
+}
+.artisan-sidebar-logo p {
+  color: rgba(245, 245, 245, 0.72);
+}
+.artisan-nav-link {
+  color: rgba(245, 245, 245, 0.88);
+}
+.artisan-nav-link:hover {
+  background: rgba(245, 245, 245, 0.12);
+}
+.artisan-nav-link.is-active {
+  background: var(--fn-cream);
+  color: var(--fn-moss);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--fn-olive);
+}
+.artisan-sidebar-footer {
+  border-top: 1px solid rgba(242, 237, 224, 0.17);
+}
+.artisan-logout-link {
+  color: rgba(245, 245, 245, 0.85);
+}
+.artisan-logout-link:hover {
+  background: rgba(245, 245, 245, 0.12);
+}
+.artisan-theme table th {
+  color: rgba(74, 74, 74, 0.8) !important;
+}
+.artisan-theme table tbody td {
+  color: var(--fn-ink) !important;
+}
+.artisan-theme table tbody tr:hover {
+  background: rgba(130, 130, 75, 0.08) !important;
+}
+.modal-surface {
+  background: var(--fn-cream) !important;
+  border: 1px solid rgba(130, 130, 75, 0.24);
+}
+.table-action-btn {
+  color: var(--fn-ink);
+}
+.table-action-edit:hover {
+  color: var(--fn-olive);
+  background: rgba(130, 130, 75, 0.12);
+}
+.table-action-delete:hover {
+  color: var(--fn-bordo);
+  background: rgba(155, 74, 58, 0.1);
+}
+.flavor-card {
+  background: var(--fn-cream) !important;
+  border: 1px solid rgba(130, 130, 75, 0.22);
+}
+.flavor-category-marker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.65rem;
+  padding-left: 0.55rem;
+  border-left: 2px solid var(--fn-olive);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fn-ink);
+  letter-spacing: 0.02em;
+}
+.flavor-category-marker.cat-salgada {
+  border-left-color: var(--fn-bordo);
+}
+.flavor-category-marker.cat-doce {
+  border-left-color: var(--fn-doce);
+}
+.flavor-category-marker.cat-especial {
+  border-left-color: var(--fn-special);
+}
+.flavor-price {
+  color: var(--fn-moss);
+  font-weight: 700;
+}
+.flavor-edit-btn {
+  color: var(--fn-ink);
+  border-color: rgba(130, 130, 75, 0.35);
+}
+.flavor-edit-btn:hover {
+  color: var(--fn-olive);
+  background: rgba(130, 130, 75, 0.12);
+}
+.flavor-delete-btn {
+  color: var(--fn-bordo);
+  border-color: rgba(130, 130, 75, 0.35);
+}
+.flavor-delete-btn:hover {
+  background: rgba(155, 74, 58, 0.08);
+}
+.remove-item-btn {
+  color: var(--fn-bordo);
+}
+.remove-item-btn:hover {
+  color: #8a3f31;
+}
+.discount-banner {
+  background: rgba(130, 130, 75, 0.12);
+  border: 1px solid rgba(130, 130, 75, 0.34);
+  color: var(--fn-ink);
+}
+.discount-badge {
+  background: rgba(130, 130, 75, 0.18);
+  color: var(--fn-moss);
+}
+.status-pill {
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+.status-pending {
+  border-color: rgba(130, 130, 75, 0.35);
+  background: rgba(130, 130, 75, 0.12);
+  color: var(--fn-ink);
+}
+.status-preparing {
+  border-color: rgba(74, 74, 74, 0.35);
+  background: rgba(74, 74, 74, 0.1);
+  color: var(--fn-ink);
+}
+.status-delivered {
+  border-color: rgba(52, 59, 41, 0.5);
+  background: rgba(52, 59, 41, 0.2);
+  color: var(--fn-moss);
+}
+.status-canceled {
+  border-color: rgba(155, 74, 58, 0.44);
+  background: rgba(155, 74, 58, 0.12);
+  color: #8a3f31;
+}
+.order-status-select {
+  border-width: 1px;
+  border-radius: 0.55rem;
 }
 @property --tw-translate-x {
   syntax: "*";

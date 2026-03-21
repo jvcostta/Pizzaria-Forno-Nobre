@@ -30,8 +30,14 @@ export class CustomersService {
     return this.customerRepository.save(customer);
   }
 
-  async findAll(): Promise<Customer[]> {
-    return this.customerRepository.find();
+  async findAll(): Promise<(Customer & { totalOrders: number })[]> {
+    const customers = await this.customerRepository
+      .createQueryBuilder('customer')
+      .loadRelationCountAndMap('customer.totalOrders', 'customer.orders')
+      .orderBy('customer.name', 'ASC')
+      .getMany();
+
+    return customers as (Customer & { totalOrders: number })[];
   }
 
   async findById(id: number): Promise<Customer> {

@@ -46,6 +46,7 @@
           <th class="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Telefone</th>
           <th class="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Email</th>
           <th class="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden lg:table-cell">Endereço</th>
+          <th class="text-center px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Pedidos</th>
           <th class="text-right px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Ações</th>
         </tr>
       </thead>
@@ -56,18 +57,23 @@
             <td class="px-5 py-3.5 text-gray-600">{{ customer.phone }}</td>
             <td class="px-5 py-3.5 text-gray-600 hidden md:table-cell">{{ customer.email ?? '—' }}</td>
             <td class="px-5 py-3.5 text-gray-600 hidden lg:table-cell">{{ customer.address }}</td>
+            <td class="px-5 py-3.5 text-center">
+              <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold rounded-full bg-primary-50 text-primary-700">
+                {{ customer.totalOrders ?? 0 }}
+              </span>
+            </td>
             <td class="px-5 py-3.5 text-right">
               <div class="flex items-center justify-end gap-2">
                 <button
                   (click)="openEdit(customer)"
-                  class="p-1.5 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                  class="table-action-btn table-action-edit p-1.5 rounded-lg transition-colors"
                   title="Editar"
                 >
                   <span class="material-symbols-outlined text-lg">edit</span>
                 </button>
                 <button
                   (click)="confirmDelete(customer.id)"
-                  class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                  class="table-action-btn table-action-delete p-1.5 rounded-lg transition-colors"
                   title="Excluir"
                 >
                   <span class="material-symbols-outlined text-lg">delete</span>
@@ -84,7 +90,7 @@
 <!-- Create Modal -->
 @if (showCreateModal()) {
   <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+    <div class="modal-surface rounded-2xl shadow-xl w-full max-w-md">
       <div class="flex items-center justify-between p-6 border-b border-gray-100">
         <h3 class="text-lg font-bold text-gray-900">Novo Cliente</h3>
         <button (click)="showCreateModal.set(false)" class="text-gray-400 hover:text-gray-600">
@@ -129,7 +135,7 @@
 <!-- Edit Modal -->
 @if (showEditModal()) {
   <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+    <div class="modal-surface rounded-2xl shadow-xl w-full max-w-md">
       <div class="flex items-center justify-between p-6 border-b border-gray-100">
         <h3 class="text-lg font-bold text-gray-900">Editar Cliente</h3>
         <button (click)="showEditModal.set(false)" class="text-gray-400 hover:text-gray-600">
@@ -170,7 +176,7 @@
 <!-- Delete Confirm Modal -->
 @if (deleteConfirmId()) {
   <div class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
+    <div class="modal-surface rounded-2xl shadow-xl w-full max-w-sm p-6 text-center">
       <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
         <span class="material-symbols-outlined text-red-500 text-2xl">delete_forever</span>
       </div>

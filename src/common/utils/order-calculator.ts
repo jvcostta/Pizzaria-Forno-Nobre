@@ -13,14 +13,14 @@ const LOYALTY_DISCOUNT_RATE = 0.1;
 
 export function calculateOrderTotal(
   items: OrderItemInput[],
-  hasLoyaltyDiscount: boolean,
+  isDiscountApplied: boolean,
 ): OrderCalculation {
   const totalValue = items.reduce(
     (sum, item) => sum + item.quantity * item.unitPrice,
     0,
   );
 
-  const discountApplied = hasLoyaltyDiscount
+  const discountApplied = isDiscountApplied
     ? round(totalValue * LOYALTY_DISCOUNT_RATE)
     : 0;
 
