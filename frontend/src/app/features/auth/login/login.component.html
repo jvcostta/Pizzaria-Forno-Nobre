@@ -1,90 +1,62 @@
-<div class="min-h-screen bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 flex items-center justify-center p-4">
-  <!-- Background decoration -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-32 -left-32 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl"></div>
-  </div>
+<div class="login-page">
+  <section class="login-image-panel" aria-hidden="true"></section>
 
-  <div class="w-full max-w-md relative z-10">
-    <!-- Logo card -->
-    <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl mb-4">
-        <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="20" fill="#e11d48" opacity="0.15"/>
-          <circle cx="24" cy="24" r="14" fill="#e11d48" opacity="0.3"/>
-          <path d="M24 10C16.27 10 10 16.27 10 24s6.27 14 14 14 14-6.27 14-14S31.73 10 24 10zm0 4c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 20c-3.33 0-6.29-1.7-8.07-4.3.04-2.67 5.34-4.14 8.07-4.14s8.03 1.47 8.07 4.14C30.29 32.3 27.33 34 24 34z" fill="#e11d48"/>
-        </svg>
-      </div>
-      <h1 class="text-2xl font-bold text-white">PizzaManager</h1>
-      <p class="text-primary-200 text-sm mt-1">Forno Nobre · Sistema de Gestão</p>
-    </div>
-
-    <!-- Form card -->
-    <div class="bg-white rounded-2xl shadow-2xl p-8">
-      <h2 class="text-xl font-bold text-gray-900 mb-1">Bem-vindo de volta!</h2>
-      <p class="text-sm text-gray-500 mb-6">Entre com suas credenciais para continuar.</p>
+  <section class="login-form-panel">
+    <div class="login-form-card">
+      <header class="login-header">
+        <h1>Bem-vindo de volta!</h1>
+        <p>Entre com suas credenciais para continuar.</p>
+      </header>
 
       @if (errorMessage()) {
-        <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-          <span class="material-symbols-outlined text-red-500 text-lg">error</span>
-          <p class="text-sm text-red-600">{{ errorMessage() }}</p>
+        <div class="form-error" role="alert">
+          <span class="material-symbols-outlined" aria-hidden="true">error</span>
+          <p>{{ errorMessage() }}</p>
         </div>
       }
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5" for="username">
-            Usuário
-          </label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-lg">person</span>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="field-group">
+          <label for="username">Usuário</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined input-icon" aria-hidden="true">person</span>
             <input
               id="username"
               type="text"
               formControlName="username"
               placeholder="Digite seu usuário"
-              class="input-field pl-10"
-              [class.border-red-400]="form.get('username')?.invalid && form.get('username')?.touched"
+              [class.input-invalid]="form.get('username')?.invalid && form.get('username')?.touched"
             />
           </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1.5" for="password">
-            Senha
-          </label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-lg">lock</span>
+        <div class="field-group">
+          <label for="password">Senha</label>
+          <div class="input-wrap">
+            <span class="material-symbols-outlined input-icon" aria-hidden="true">lock</span>
             <input
               id="password"
               [type]="showPassword() ? 'text' : 'password'"
               formControlName="password"
               placeholder="Digite sua senha"
-              class="input-field pl-10 pr-10"
-              [class.border-red-400]="form.get('password')?.invalid && form.get('password')?.touched"
+              [class.input-invalid]="form.get('password')?.invalid && form.get('password')?.touched"
             />
             <button
               type="button"
+              class="toggle-password"
               (click)="showPassword.set(!showPassword())"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              [attr.aria-label]="showPassword() ? 'Ocultar senha' : 'Mostrar senha'"
             >
-              <span class="material-symbols-outlined text-lg">
+              <span class="material-symbols-outlined" aria-hidden="true">
                 {{ showPassword() ? 'visibility_off' : 'visibility' }}
               </span>
             </button>
           </div>
         </div>
 
-        <button
-          type="submit"
-          [disabled]="form.invalid || isLoading()"
-          class="btn-primary w-full py-3 mt-2 flex items-center justify-center gap-2"
-        >
+        <button type="submit" [disabled]="form.invalid || isLoading()" class="submit-button">
           @if (isLoading()) {
-            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg>
+            <span class="button-spinner" aria-hidden="true"></span>
             Entrando...
           } @else {
             Entrar
@@ -92,9 +64,9 @@
         </button>
       </form>
 
-      <p class="text-xs text-gray-400 text-center mt-6">
+      <footer class="login-footer">
         Credenciais padrão: <strong>admin</strong> / <strong>admin123</strong>
-      </p>
+      </footer>
     </div>
-  </div>
+  </section>
 </div>
