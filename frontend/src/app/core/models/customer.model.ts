@@ -6,6 +6,7 @@ export interface Customer {
   email?: string;
   address: string;
   createdAt?: string;
+  totalOrders?: number;
 }
 
 export interface CreateCustomerDto {
