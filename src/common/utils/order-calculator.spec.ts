@@ -14,12 +14,20 @@ describe('calculateOrderTotal', () => {
     expect(result.finalValue).toBe(112.5);
   });
 
-  it('deve aplicar 10% de desconto de fidelidade', () => {
+  it('deve aplicar 10% de desconto quando isDiscountApplied é true', () => {
     const result = calculateOrderTotal(sampleItems, true);
 
     expect(result.totalValue).toBe(112.5);
     expect(result.discountApplied).toBe(11.25);
     expect(result.finalValue).toBe(101.25);
+  });
+
+  it('NÃO deve aplicar desconto quando isDiscountApplied é false', () => {
+    const result = calculateOrderTotal(sampleItems, false);
+
+    expect(result.totalValue).toBe(112.5);
+    expect(result.discountApplied).toBe(0);
+    expect(result.finalValue).toBe(112.5);
   });
 
   it('deve retornar zero para lista de itens vazia', () => {

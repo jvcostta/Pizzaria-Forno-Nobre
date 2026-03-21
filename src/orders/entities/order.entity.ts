@@ -60,6 +60,13 @@ export class Order {
   })
   finalValue: number;
 
+  @Column({
+    name: 'is_discount_applied',
+    type: 'boolean',
+    default: false,
+  })
+  isDiscountApplied: boolean;
+
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
   items: OrderItem[];
 }
