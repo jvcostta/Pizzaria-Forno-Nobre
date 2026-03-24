@@ -1,6 +1,7 @@
 import {
   Injectable,
   BadRequestException,
+  ConflictException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,9 +23,15 @@ export class CustomersService {
       throw new BadRequestException('CPF inválido');
     }
 
+    const cleanedCpf = dto.cpf.replace(/\D/g, '');
+    const existing = await this.customerRepository.findOneBy({ cpf: cleanedCpf });
+    if (existing) {
+      throw new ConflictException('Este CPF já está cadastrado para outro cliente.');
+    }
+
     const customer = this.customerRepository.create({
       ...dto,
-      cpf: dto.cpf.replace(/\D/g, ''),
+      cpf: cleanedCpf,
     });
 
     return this.customerRepository.save(customer);
@@ -60,7 +67,12 @@ export class CustomersService {
       if (!isValidCpf(dto.cpf)) {
         throw new BadRequestException('CPF inválido');
       }
-      dto.cpf = dto.cpf.replace(/\D/g, '');
+      const cleanedCpf = dto.cpf.replace(/\D/g, '');
+      const existing = await this.customerRepository.findOneBy({ cpf: cleanedCpf });
+      if (existing && existing.id !== id) {
+        throw new ConflictException('Este CPF já está cadastrado para outro cliente.');
+      }
+      dto.cpf = cleanedCpf;
     }
 
     Object.assign(customer, dto);
