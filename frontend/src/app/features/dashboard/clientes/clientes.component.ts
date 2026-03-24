@@ -3,6 +3,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CustomersService } from '../../../core/services/customers.service';
 import { Customer } from '../../../core/models/customer.model';
+import { cpfValidator, formatCpf, unformatCpf } from '../../../shared/validators/cpf.validator';
 
 @Component({
   selector: 'app-clientes',
@@ -22,6 +23,7 @@ export class ClientesComponent implements OnInit {
   showEditModal = signal(false);
   selectedCustomer = signal<Customer | null>(null);
   deleteConfirmId = signal<number | null>(null);
+  cpfServerError = signal<string | null>(null);
 
   filteredCustomers = computed(() => {
     const query = this.searchQuery().toLowerCase();
@@ -39,7 +41,7 @@ export class ClientesComponent implements OnInit {
     phone: ['', [Validators.required]],
     email: ['', [Validators.email]],
     address: ['', [Validators.required]],
-    cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+    cpf: ['', [Validators.required, cpfValidator]],
   });
 
   editForm = this.fb.group({
@@ -47,11 +49,21 @@ export class ClientesComponent implements OnInit {
     phone: ['', [Validators.required]],
     email: ['', [Validators.email]],
     address: ['', [Validators.required]],
-    cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+    cpf: ['', [Validators.required, cpfValidator]],
   });
 
   ngOnInit() {
     this.loadCustomers();
+  }
+
+  onCpfInput(event: Event, formName: 'createForm' | 'editForm') {
+    const input = event.target as HTMLInputElement;
+    const formatted = formatCpf(input.value);
+    input.value = formatted;
+    const form = formName === 'createForm' ? this.createForm : this.editForm;
+    form.get('cpf')!.setValue(formatted, { emitEvent: false });
+    form.get('cpf')!.updateValueAndValidity();
+    this.cpfServerError.set(null);
   }
 
   loadCustomers() {
@@ -67,6 +79,8 @@ export class ClientesComponent implements OnInit {
 
   openCreate() {
     this.createForm.reset();
+    this.errorMessage.set(null);
+    this.cpfServerError.set(null);
     this.showCreateModal.set(true);
   }
 
@@ -77,8 +91,10 @@ export class ClientesComponent implements OnInit {
       phone: customer.phone,
       email: customer.email ?? '',
       address: customer.address,
-      cpf: customer.cpf ?? '',
+      cpf: customer.cpf ? formatCpf(customer.cpf) : '',
     });
+    this.errorMessage.set(null);
+    this.cpfServerError.set(null);
     this.showEditModal.set(true);
   }
 
@@ -89,7 +105,7 @@ export class ClientesComponent implements OnInit {
 
     const { name, phone, email, address, cpf } = this.createForm.value;
     this.customersService
-      .create({ name: name!, phone: phone!, email: email ?? undefined, address: address!, cpf: cpf! })
+      .create({ name: name!, phone: phone!, email: email ?? undefined, address: address!, cpf: unformatCpf(cpf!) })
       .subscribe({
         next: (customer) => {
           this.customers.update((list) => [...list, customer]);
@@ -111,7 +127,7 @@ export class ClientesComponent implements OnInit {
 
     const { name, phone, email, address, cpf } = this.editForm.value;
     this.customersService
-      .update(customer.id, { name: name!, phone: phone!, email: email ?? undefined, address: address!, cpf: cpf! })
+      .update(customer.id, { name: name!, phone: phone!, email: email ?? undefined, address: address!, cpf: unformatCpf(cpf!) })
       .subscribe({
         next: (updated) => {
           this.customers.update((list) =>
@@ -149,10 +165,13 @@ export class ClientesComponent implements OnInit {
   }
 
   private extractError(err: HttpErrorResponse): string {
+    if (err.status === 409) {
+      this.cpfServerError.set('Este CPF já está cadastrado para outro cliente.');
+      return 'Este CPF já está cadastrado para outro cliente.';
+    }
     const msg = err.error?.message;
     if (Array.isArray(msg)) return msg.join(' | ');
     if (typeof msg === 'string') return msg;
-    if (err.status === 409) return 'CPF já cadastrado.';
     if (err.status === 400) return 'Dados inválidos. Verifique os campos e tente novamente.';
     return 'Ocorreu um erro. Tente novamente.';
   }
