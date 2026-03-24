@@ -47,21 +47,27 @@ export class PizzasService {
     await this.pizzaRepository.remove(pizza);
   }
 
-  async findTopSellers(limit = 10): Promise<
-    { pizzaId: number; flavorName: string; totalSold: number }[]
-  > {
-    return this.orderItemRepository
+  async findTopSellers(
+    limit = 10,
+  ): Promise<{ pizzaId: number; flavorName: string; totalSold: number }[]> {
+    const rows = await this.orderItemRepository
       .createQueryBuilder('item')
       .select('item.pizza_id', 'pizzaId')
       .addSelect('pizza.flavor_name', 'flavorName')
-      .addSelect('SUM(item.quantity)', 'totalSold')
+      .addSelect('COALESCE(SUM(item.quantity), 0)', 'totalSold')
       .innerJoin('item.pizza', 'pizza')
       .innerJoin('item.order', 'order')
       .where('order.status != :canceled', { canceled: OrderStatus.CANCELED })
       .groupBy('item.pizza_id')
       .addGroupBy('pizza.flavor_name')
-      .orderBy('totalSold', 'DESC')
+      .orderBy('"totalSold"', 'DESC')
       .limit(limit)
-      .getRawMany();
+      .getRawMany<{ pizzaId: number; flavorName: string; totalSold: string }>();
+
+    return rows.map((row) => ({
+      pizzaId: Number(row.pizzaId),
+      flavorName: row.flavorName,
+      totalSold: Number(row.totalSold) || 0,
+    }));
   }
 }
