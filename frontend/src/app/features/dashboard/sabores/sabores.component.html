@@ -30,6 +30,7 @@
       <div class="card flavor-card overflow-hidden flex flex-col transition-shadow duration-200">
         <div class="p-4 flex flex-col flex-1">
           <div class="flavor-category-marker {{ getCategoryConfig(pizza.category).markerClass }}">
+            <span class="material-symbols-outlined flavor-category-icon" aria-hidden="true">{{ getCategoryConfig(pizza.category).icon }}</span>
             <span>{{ getCategoryConfig(pizza.category).label }}</span>
           </div>
           <div class="flex items-start justify-between gap-2 mb-2">
