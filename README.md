@@ -29,7 +29,19 @@ Copie o arquivo de exemplo e configure as variáveis:
 cp .env.example .env
 ```
 
-Edite o `.env` com os valores desejados (os padrões já funcionam com o Docker Compose).
+As variáveis de banco já estão preenchidas com os valores padrão do Docker Compose e funcionam sem alteração.
+
+Para o `JWT_SECRET`, gere qualquer string aleatória — ela é usada para assinar os tokens JWT localmente e não precisa ser compartilhada:
+
+```bash
+# Opção 1: gerar via Node
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+# Opção 2: qualquer string serve para desenvolvimento local
+# JWT_SECRET=minha-chave-local-qualquer
+```
+
+> Em produção, use uma chave longa e aleatória e nunca a exponha em repositórios.
 
 ### 2. Instalar dependências
 
