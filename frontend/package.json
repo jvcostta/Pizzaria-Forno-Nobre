@@ -7,6 +7,7 @@
     "build": "node_modules/.bin/tailwindcss -i src/styles.input.css -o src/styles.css && ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:vitest": "vitest run",
     "tailwind": "node_modules/.bin/tailwindcss -i src/styles.input.css -o src/styles.css"
   },
   "private": true,
@@ -23,17 +24,23 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^2.3.1",
+    "@analogjs/vitest-angular": "^2.3.1",
     "@angular/build": "^21.2.3",
     "@angular/cli": "^21.2.3",
     "@angular/compiler-cli": "^21.2.0",
     "@tailwindcss/cli": "^4.2.2",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.2.2",
+    "@vitest/coverage-v8": "^4.1.1",
     "autoprefixer": "^10.4.27",
     "concurrently": "^9.2.1",
+    "jsdom": "^29.0.1",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "vitest": "^4.1.1",
+    "zone.js": "^0.16.1"
   }
 }
