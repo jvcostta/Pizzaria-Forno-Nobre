@@ -1,5 +1,6 @@
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { CustomersService } from '../../../core/services/customers.service';
 import { OrdersService } from '../../../core/services/orders.service';
 import { PizzasService } from '../../../core/services/pizzas.service';
@@ -40,9 +41,9 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit() {
     forkJoin({
-      customers: this.customersService.getAll(),
-      orders: this.ordersService.getAll(),
-      topSellers: this.pizzasService.getTopSellers(5),
+      customers: this.customersService.getAll().pipe(catchError(() => of([]))),
+      orders: this.ordersService.getAll().pipe(catchError(() => of([]))),
+      topSellers: this.pizzasService.getTopSellers(5).pipe(catchError(() => of([]))),
     }).subscribe({
       next: ({ customers, orders, topSellers }) => {
         this.customers.set(customers);
@@ -94,9 +95,9 @@ export class OverviewComponent implements OnInit {
     return classes[status] ?? 'status-pill status-pending';
   }
 
-  getBarHeight(value: number | string): number {
+  getBarWidth(value: number | string): number {
     const num = this.toNumber(value);
     const max = this.barMaxValue();
-    return max > 0 ? Math.round((num / max) * 160) : 0;
+    return max > 0 ? Math.round((num / max) * 100) : 0;
   }
 }

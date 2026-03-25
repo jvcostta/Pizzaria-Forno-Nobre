@@ -6,6 +6,7 @@ import { Pizza, PizzaCategory } from '../../../core/models/pizza.model';
 
 interface CategoryConfig {
   label: string;
+  icon: string;
   markerClass: string;
 }
 
@@ -34,14 +35,17 @@ export class SaboresComponent implements OnInit {
   categoryConfig: Record<string, CategoryConfig> = {
     Salgada: {
       label: 'Salgada',
+      icon: 'local_pizza',
       markerClass: 'cat-salgada',
     },
     Doce: {
       label: 'Doce',
+      icon: 'icecream',
       markerClass: 'cat-doce',
     },
     Especial: {
       label: 'Especial',
+      icon: 'crown',
       markerClass: 'cat-especial',
     },
   };

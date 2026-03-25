@@ -1319,7 +1319,7 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
     color: #f5f5f5;
-    box-shadow: 0 8px 20px rgba(52, 59, 41, 0.2);
+    box-shadow: 0 8px 18px rgba(52, 59, 41, 0.24);
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
@@ -1470,7 +1470,7 @@
   color: var(--fn-ink) !important;
 }
 .artisan-theme table tbody tr:hover {
-  background: rgba(130, 130, 75, 0.08) !important;
+  background: #f9f1e7 !important;
 }
 .modal-surface {
   background: var(--fn-cream) !important;
@@ -1494,22 +1494,32 @@
 .flavor-category-marker {
   display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
   margin-bottom: 0.65rem;
   padding-left: 0.55rem;
-  border-left: 2px solid var(--fn-olive);
+  border-left: 4px solid var(--fn-olive);
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--fn-ink);
   letter-spacing: 0.02em;
 }
+.flavor-category-icon {
+  font-size: 1rem;
+}
 .flavor-category-marker.cat-salgada {
-  border-left-color: var(--fn-bordo);
+  border-left-color: #9d0208;
+  color: #9d0208;
 }
 .flavor-category-marker.cat-doce {
-  border-left-color: var(--fn-doce);
+  border-left-color: #480c02;
+  color: #480c02;
 }
 .flavor-category-marker.cat-especial {
-  border-left-color: var(--fn-special);
+  border-left-color: #faa307;
+  color: #c17d00;
+}
+.fire-bar {
+  background: linear-gradient(90deg, #f77f00 0%, #e85d04 45%, #d62828 100%);
 }
 .flavor-price {
   color: var(--fn-moss);
@@ -1545,6 +1555,30 @@
   background: rgba(130, 130, 75, 0.18);
   color: var(--fn-moss);
 }
+.discount-mini-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(82, 183, 136, 0.38);
+  background: rgba(82, 183, 136, 0.16);
+  color: #2d6a4f;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+}
+.price-with-discount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+.price-main {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1f1f1f;
+}
 .status-pill {
   border-radius: 999px;
   padding: 0.15rem 0.55rem;
@@ -1552,24 +1586,24 @@
   font-weight: 600;
 }
 .status-pending {
-  border-color: rgba(130, 130, 75, 0.35);
-  background: rgba(130, 130, 75, 0.12);
-  color: var(--fn-ink);
+  border-color: #ffb703;
+  background: #ffb703;
+  color: #111111;
 }
 .status-preparing {
-  border-color: rgba(74, 74, 74, 0.35);
-  background: rgba(74, 74, 74, 0.1);
-  color: var(--fn-ink);
+  border-color: #e85d04;
+  background: #e85d04;
+  color: #ffffff;
 }
 .status-delivered {
-  border-color: rgba(52, 59, 41, 0.5);
-  background: rgba(52, 59, 41, 0.2);
-  color: var(--fn-moss);
+  border-color: #52b788;
+  background: #52b788;
+  color: #ffffff;
 }
 .status-canceled {
-  border-color: rgba(155, 74, 58, 0.44);
-  background: rgba(155, 74, 58, 0.12);
-  color: #8a3f31;
+  border-color: #d00000;
+  background: #d00000;
+  color: #ffffff;
 }
 .order-status-select {
   border-width: 1px;
